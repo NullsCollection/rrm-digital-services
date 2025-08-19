@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="124" height="70"><svg width="124" height="70" viewBox="0 0 124 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="SvgjsMask1016" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="124" height="70">
+<path d="M123.37 0H0V69.49H123.37V0Z" fill="white"></path>
+</mask>
+<g mask="url(#mask0_738_18)">
+<path d="M35.08 0H18.53C18.53 20.43 15.17 26.03 1.72 26.44H0V26.47V43.02C2.27 43.02 4.39 42.89 6.37 42.66L16.91 69.49H33.46L21.01 37.79C35.06 28.78 35.08 10.29 35.08 0Z" fill="#000525"></path>
+<path d="M106.82 0H100.61L89.5206 22.29L78.4205 0H77.4905C77.4905 6.4 77.4905 15.97 74.3105 24.98L81.2505 38.91L89.5206 55.53L97.7905 38.91L106.81 20.78V69.5H123.36V0H106.81H106.82Z" fill="#000525"></path>
+<path d="M71.9704 0H55.4204C55.4204 20.43 52.0604 26.03 38.6104 26.44H36.9004V26.47V43.02C39.1704 43.02 41.2904 42.89 43.2704 42.66L53.8104 69.49H70.3604L57.9104 37.79C71.9504 28.78 71.9704 10.29 71.9704 0Z" fill="#96E022"></path>
+</g>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>
