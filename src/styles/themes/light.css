@@ -59,3 +59,67 @@
   --card-shadow-hover:
     0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
+
+/* Light mode gallery overlay - use same dark background as dark mode */
+[data-theme='light'] #work .group:hover .bg-gradient-to-t {
+  background: linear-gradient(
+    to top,
+    #000525 0%,
+    rgba(0, 5, 37, 0.5) 50%,
+    transparent 100%
+  ) !important;
+}
+
+/* Light mode gallery subtext - make it white like dark mode */
+[data-theme='light'] #work .group:hover .text-\[var\(--text-secondary\)\] {
+  color: #cbd5e1 !important;
+}
+
+/* Light mode specific card hover effects */
+[data-theme='light'] .card-effect:hover {
+  background: linear-gradient(
+    45deg,
+    rgba(124, 204, 0, 0.08) 0%,
+    rgba(124, 204, 0, 0.12) 25%,
+    rgba(124, 204, 0, 0.06) 50%,
+    rgba(124, 204, 0, 0.12) 75%,
+    rgba(124, 204, 0, 0.08) 100%
+  ) !important;
+  background-size: 400% 400%;
+  animation: gradient-move 6s ease infinite;
+  border-color: rgba(124, 204, 0, 0.6) !important;
+  box-shadow:
+    0 10px 25px -5px rgba(124, 204, 0, 0.15),
+    0 4px 6px -2px rgba(124, 204, 0, 0.1);
+}
+
+/* Light mode floating rectangles - lighter green tones */
+[data-theme='light'] .card-effect .floating-elements::before {
+  background: rgba(124, 204, 0, 0.6);
+  box-shadow: 0 0 20px rgba(124, 204, 0, 0.4);
+}
+
+[data-theme='light'] .card-effect .floating-elements::after {
+  background: rgba(124, 204, 0, 0.6);
+  box-shadow: 0 0 20px rgba(124, 204, 0, 0.4);
+}
+
+[data-theme='light'] .card-effect .small-rect-1 {
+  background: rgba(124, 204, 0, 0.5);
+  box-shadow: 0 0 10px rgba(124, 204, 0, 0.3);
+}
+
+[data-theme='light'] .card-effect .small-rect-2 {
+  background: rgba(124, 204, 0, 0.4);
+  box-shadow: 0 0 8px rgba(124, 204, 0, 0.2);
+}
+
+[data-theme='light'] .card-effect .small-rect-3 {
+  background: rgba(124, 204, 0, 0.5);
+  box-shadow: 0 0 10px rgba(124, 204, 0, 0.3);
+}
+
+[data-theme='light'] .card-effect .small-rect-4 {
+  background: rgba(124, 204, 0, 0.4);
+  box-shadow: 0 0 8px rgba(124, 204, 0, 0.2);
+}

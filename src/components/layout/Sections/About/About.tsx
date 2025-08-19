@@ -6,18 +6,37 @@ import { Icon } from '@iconify/react';
 import { cn } from '@/lib/utils';
 import { AboutProps } from './About.types';
 import { ABOUT_PILLARS } from './About.data';
+import { useScrollReveal, getRevealClasses } from '@/hooks/useScrollReveal';
 
 export default function AboutSection({ className }: AboutProps) {
+  const { elementRef: titleRef, isRevealed: isTitleRevealed } =
+    useScrollReveal<HTMLHeadingElement>();
+  const { elementRef: contentRef, isRevealed: isContentRevealed } =
+    useScrollReveal<HTMLDivElement>();
+  const { elementRef: imageRef, isRevealed: isImageRevealed } =
+    useScrollReveal<HTMLDivElement>();
+
   return (
     <section id="about" className={cn('section section-compact', className)}>
       <div className="container-content">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16 min-h-[600px]">
           {/* Left column: Title, badges, and description */}
-          <div className="flex flex-col justify-center">
-            <h3 className="heading-3 text-left">Who We Are</h3>
+          <div ref={contentRef} className="flex flex-col justify-center">
+            <h3
+              ref={titleRef}
+              className={getRevealClasses(
+                'heading-3 text-left',
+                isTitleRevealed,
+                'slide-up'
+              )}
+            >
+              Who We Are
+            </h3>
 
             {/* Description */}
-            <div className="mt-4">
+            <div
+              className={getRevealClasses('mt-4', isContentRevealed, 'fade-in')}
+            >
               <p className="font-body text-[var(--text-secondary)] leading-relaxed">
                 At RRM Digital Services, we don&apos;t just build digital
                 products — we bring ideas to life, shape them to perfection, and
@@ -26,11 +45,15 @@ export default function AboutSection({ className }: AboutProps) {
 
               {/* Three pillars: Render, Refine, Mobilize */}
               <div className="mt-8 grid grid-cols-1 gap-4 max-w-4xl">
-                {ABOUT_PILLARS.map(pillar => (
+                {ABOUT_PILLARS.map((pillar, index) => (
                   <Card
                     key={pillar.id}
                     variant="elevated"
-                    className="group relative"
+                    className={getRevealClasses(
+                      'group relative',
+                      isContentRevealed,
+                      `stagger-${index + 1}`
+                    )}
                   >
                     <CardContent className="card-content px-6 py-4 text-left">
                       <div className="flex items-center gap-5 mb-4">
@@ -67,8 +90,14 @@ export default function AboutSection({ className }: AboutProps) {
           </div>
 
           {/* Right column: Team image with floating rectangles */}
-          <div className="relative flex items-center">
-            <div className="relative w-full">
+          <div ref={imageRef} className="relative flex items-center">
+            <div
+              className={getRevealClasses(
+                'relative w-full',
+                isImageRevealed,
+                'scale-in'
+              )}
+            >
               <Image
                 src="/images/rrm.png"
                 alt="Team collaboration"

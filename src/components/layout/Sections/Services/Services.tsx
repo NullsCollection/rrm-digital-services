@@ -9,8 +9,15 @@ import { ServicesProps } from './Services.types';
 import { getServiceIconName } from './Services.utils';
 import { Icon } from '@iconify/react';
 import useEmblaCarousel from 'embla-carousel-react';
+import { useScrollReveal, getRevealClasses } from '@/hooks/useScrollReveal';
 
 export default function ServicesSection({ className }: ServicesProps) {
+  const { elementRef: titleRef, isRevealed: isTitleRevealed } =
+    useScrollReveal<HTMLHeadingElement>();
+  const { elementRef: badgesRef, isRevealed: isBadgesRevealed } =
+    useScrollReveal<HTMLDivElement>();
+  const { elementRef: carouselRef } = useScrollReveal<HTMLDivElement>();
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     loop: true,
@@ -130,17 +137,32 @@ export default function ServicesSection({ className }: ServicesProps) {
   return (
     <section id="services" className={cn('section section-compact', className)}>
       <div className="container-content">
-        <div className="mx-auto max-w-2xl text-center">
-          <h3 className="heading-3">What We Do</h3>
+        <div ref={titleRef} className="mx-auto max-w-2xl text-center">
+          <h3
+            className={getRevealClasses(
+              'heading-3',
+              isTitleRevealed,
+              'slide-up'
+            )}
+          >
+            What We Do
+          </h3>
         </div>
 
         {/* Badge Navigation */}
-        <div className="mt-4 flex justify-center items-center gap-3 lg:gap-4">
+        <div
+          ref={badgesRef}
+          className="mt-4 flex justify-center items-center gap-3 lg:gap-4"
+        >
           {['Design', 'Code', 'Deliver'].map((badge, index) => (
             <Badge
               key={`services-${badge}-${index}`}
               size="md"
-              className="font-body"
+              className={getRevealClasses(
+                'font-body',
+                isBadgesRevealed,
+                `stagger-${index + 1}`
+              )}
             >
               {badge}
             </Badge>
@@ -148,7 +170,7 @@ export default function ServicesSection({ className }: ServicesProps) {
         </div>
 
         {/* Services Carousel */}
-        <div className="w-full max-w-6xl mx-auto mt-6">
+        <div ref={carouselRef} className="w-full max-w-6xl mx-auto mt-6">
           {/* Cards Container */}
           <div
             className="overflow-visible md:overflow-hidden py-12"
