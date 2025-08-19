@@ -6,22 +6,44 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { WorkProps } from './Work.types';
 import { GALLERY_ROWS } from './Work.data';
+import { useScrollReveal, getRevealClasses } from '@/hooks/useScrollReveal';
 
 export default function WorkSection({ className }: WorkProps) {
+  const { elementRef: titleRef, isRevealed: isTitleRevealed } =
+    useScrollReveal<HTMLHeadingElement>();
+  const { elementRef: badgesRef, isRevealed: isBadgesRevealed } =
+    useScrollReveal<HTMLDivElement>();
+  const { elementRef: galleryRef } = useScrollReveal<HTMLDivElement>();
+
   return (
     <section id="work" className={cn('section section-compact', className)}>
       <div className="container-content">
-        <div className="mx-auto max-w-2xl text-center">
-          <h3 className="heading-3">Our Work</h3>
+        <div ref={titleRef} className="mx-auto max-w-2xl text-center">
+          <h3
+            className={getRevealClasses(
+              'heading-3',
+              isTitleRevealed,
+              'slide-up'
+            )}
+          >
+            Our Work
+          </h3>
         </div>
 
         {/* Filter Badges */}
-        <div className="mt-4 flex justify-center items-center gap-3 lg:gap-4">
+        <div
+          ref={badgesRef}
+          className="mt-4 flex justify-center items-center gap-3 lg:gap-4"
+        >
           {WORK_FILTERS.map((filter, index) => (
             <Badge
               key={`work-${filter.id}-${index}`}
               size="md"
-              className="font-body"
+              className={getRevealClasses(
+                'font-body',
+                isBadgesRevealed,
+                `stagger-${index + 1}`
+              )}
             >
               {filter.label}
             </Badge>
@@ -29,7 +51,7 @@ export default function WorkSection({ className }: WorkProps) {
         </div>
 
         {/* Work Gallery */}
-        <div className="mt-16">
+        <div ref={galleryRef} className="mt-16">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {GALLERY_ROWS.flatMap(row => row.items).map(item => (
               <div

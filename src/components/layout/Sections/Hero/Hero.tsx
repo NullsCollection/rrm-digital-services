@@ -6,8 +6,16 @@ import FloatingElements from '@/components/ui/FloatingElements';
 import GlowBackground from '@/components/ui/GlowBackground';
 import { cn } from '@/lib/utils';
 import { HeroProps } from './Hero.types';
+import { useScrollReveal, getRevealClasses } from '@/hooks/useScrollReveal';
 
 export default function HeroSection({ className }: HeroProps) {
+  const { elementRef: titleRef, isRevealed: isTitleRevealed } =
+    useScrollReveal<HTMLHeadingElement>();
+  const { elementRef: subtitleRef, isRevealed: isSubtitleRevealed } =
+    useScrollReveal<HTMLHeadingElement>();
+  const { elementRef: buttonRef, isRevealed: isButtonRevealed } =
+    useScrollReveal<HTMLParagraphElement>();
+
   return (
     <section className={cn('section relative mb-8', className)}>
       {/* Background Glowing Effect - inside hero section */}
@@ -18,12 +26,35 @@ export default function HeroSection({ className }: HeroProps) {
 
       <div className="container-content relative z-20">
         <div className="text-center">
-          <h4 className="heading-4">We Build</h4>
-          <h2 className="heading-2">
+          <h4
+            ref={titleRef}
+            className={getRevealClasses(
+              'heading-4',
+              isTitleRevealed,
+              'fade-in'
+            )}
+          >
+            We Build
+          </h4>
+          <h2
+            ref={subtitleRef}
+            className={getRevealClasses(
+              'heading-2',
+              isSubtitleRevealed,
+              'slide-up'
+            )}
+          >
             <span className="block">DIGITAL EXPERIENCES</span>
             <span className="block">That Matters</span>
           </h2>
-          <p className="mt-6 text-sm max-w-2xl leading-relaxed text-[var(--text-secondary)] sm:text-base sm:leading-8 mx-auto">
+          <p
+            ref={buttonRef}
+            className={getRevealClasses(
+              'mt-6 text-sm max-w-2xl leading-relaxed text-[var(--text-secondary)] sm:text-base sm:leading-8 mx-auto',
+              isButtonRevealed,
+              'fade-in'
+            )}
+          >
             {HERO_CONTENT.subtitle}
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">

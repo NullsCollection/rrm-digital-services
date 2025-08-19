@@ -8,24 +8,49 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { ProcessProps } from './Process.types';
 import { getStepNumber } from './Process.utils';
+import { useScrollReveal, getRevealClasses } from '@/hooks/useScrollReveal';
 
 export default function ProcessSection({ className }: ProcessProps) {
+  const { elementRef: titleRef, isRevealed: isTitleRevealed } =
+    useScrollReveal<HTMLHeadingElement>();
+  const { elementRef: badgesRef, isRevealed: isBadgesRevealed } =
+    useScrollReveal<HTMLDivElement>();
+  const { elementRef: stepsRef, isRevealed: isStepsRevealed } =
+    useScrollReveal<HTMLDivElement>();
+  const { elementRef: ctaRef, isRevealed: isCtaRevealed } =
+    useScrollReveal<HTMLDivElement>();
+
   return (
     <section id="process" className={cn('section section-compact', className)}>
       <div className="container-content">
         {/* Two-column layout for title and badges */}
         <div className="flex flex-row items-end gap-8 lg:gap-12 mb-16">
           {/* Left column: Title and badges */}
-          <div className="lg:w-auto">
-            <h3 className="heading-3 text-left">How We Work</h3>
+          <div ref={titleRef} className="lg:w-auto">
+            <h3
+              className={getRevealClasses(
+                'heading-3 text-left',
+                isTitleRevealed,
+                'slide-up'
+              )}
+            >
+              How We Work
+            </h3>
 
             {/* Badge Navigation */}
-            <div className="mt-4 flex flex-wrap items-center gap-3 lg:gap-4">
+            <div
+              ref={badgesRef}
+              className="mt-4 flex flex-wrap items-center gap-3 lg:gap-4"
+            >
               {['Clarity', 'Structure', 'Results'].map((badge, index) => (
                 <Badge
                   key={`process-${badge}-${index}`}
                   size="md"
-                  className="font-body"
+                  className={getRevealClasses(
+                    'font-body',
+                    isBadgesRevealed,
+                    `stagger-${index + 1}`
+                  )}
                 >
                   {badge}
                 </Badge>
@@ -40,13 +65,17 @@ export default function ProcessSection({ className }: ProcessProps) {
         </div>
 
         {/* Process Steps Grid */}
-        <div className="mt-16">
+        <div ref={stepsRef} className="mt-16">
           <div className="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {PROCESS_STEPS.map(step => (
+            {PROCESS_STEPS.map((step, index) => (
               <Card
                 key={step.id}
                 variant="elevated"
-                className="card-effect group relative transition-all duration-300"
+                className={getRevealClasses(
+                  'card-effect group relative transition-all duration-300',
+                  isStepsRevealed,
+                  `stagger-${index + 1}`
+                )}
               >
                 <span className="floating-elements">
                   <span className="small-rect-1"></span>
@@ -71,40 +100,46 @@ export default function ProcessSection({ className }: ProcessProps) {
         </div>
 
         {/* Call to Action Banner */}
-        <div className="mt-12 sm:mt-14">
-          <div className="bg-[var(--bg-card)] rounded-2xl p-6 sm:p-7 lg:p-8 border border-[var(--border-primary)]">
+        <div ref={ctaRef} className="mt-12 sm:mt-14">
+          <div
+            className={getRevealClasses(
+              'bg-[var(--bg-card)] rounded-2xl p-6 sm:p-7 lg:p-8 border border-[var(--border-primary)]',
+              isCtaRevealed,
+              'slide-up'
+            )}
+          >
             <div className="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-7 lg:gap-8 text-center lg:text-left">
               {/* Profile images and text - grouped together */}
               <div className="flex flex-col lg:flex-row items-center gap-4 sm:gap-5 lg:gap-6">
                 {/* Circular profile images */}
                 <div className="flex -space-x-4">
                   <Image
-                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww"
-                    alt="Team member 1"
+                    src="/images/avatar/chris.jpg"
+                    alt="Chris - Team Member"
                     className="w-12 h-12 rounded-full border-2 border-[var(--bg-primary)] object-cover"
                     width={50}
                     height={50}
                     loading="eager"
                   />
                   <Image
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
-                    alt="Team member 2"
+                    src="/images/avatar/robert.jpg"
+                    alt="Robert - Team Member"
                     className="w-12 h-12 rounded-full border-2 border-[var(--bg-primary)] object-cover"
                     width={50}
                     height={50}
                     loading="eager"
                   />
                   <Image
-                    src="https://images.unsplash.com/photo-1654110455429-cf322b40a906?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
-                    alt="Team member 3"
+                    src="/images/avatar/raffy.jpg"
+                    alt="Raffy - Team Member"
                     className="w-12 h-12 rounded-full border-2 border-[var(--bg-primary)] object-cover"
                     width={50}
                     height={50}
                     loading="eager"
                   />
                   <Image
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww"
-                    alt="Team member 4"
+                    src="/images/avatar/mark.jpg"
+                    alt="Mark - Team Member"
                     className="w-12 h-12 rounded-full border-2 border-[var(--bg-primary)] object-cover"
                     width={50}
                     height={50}

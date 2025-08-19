@@ -5,12 +5,17 @@ import GlowBackground from '@/components/ui/GlowBackground';
 import ContactUs from '@/components/layout/Forms/ContactUs';
 import { cn } from '@/lib/utils';
 import { ContactProps } from './Contact.types';
+import { useScrollReveal, getRevealClasses } from '@/hooks/useScrollReveal';
 
 export default function ContactSection({
   className,
   onSubmitSuccess,
   onSubmitError,
 }: ContactProps) {
+  const { elementRef: titleRef, isRevealed: isTitleRevealed } =
+    useScrollReveal<HTMLHeadingElement>();
+  const { elementRef: formRef } = useScrollReveal<HTMLDivElement>();
+
   // Default handlers if not provided
   const handleContactSuccess = (data: unknown) => {
     console.log('Contact form submitted successfully:', data);
@@ -36,11 +41,19 @@ export default function ContactSection({
       <GlowBackground variant="contact" color="primary" intensity="strong" />
 
       <div className="container-content relative">
-        <div className="mx-auto max-w-2xl text-center">
-          <h3 className="heading-3">{CONTACT_CONTENT.title}</h3>
+        <div ref={titleRef} className="mx-auto max-w-2xl text-center">
+          <h3
+            className={getRevealClasses(
+              'heading-3',
+              isTitleRevealed,
+              'slide-up'
+            )}
+          >
+            {CONTACT_CONTENT.title}
+          </h3>
         </div>
 
-        <div className="mx-auto mt-8 max-w-xl">
+        <div ref={formRef} className="mx-auto mt-8 max-w-xl">
           {/* Contact Form - Using the ContactUs component */}
           <ContactUs
             onSubmitSuccess={handleContactSuccess}
